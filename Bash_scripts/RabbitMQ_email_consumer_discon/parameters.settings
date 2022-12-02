@@ -1,6 +1,0 @@
-URL='msk-rabbitmq.polygon.dzr.ts:15672'
-VHOST='umms-app-supp'
-USER='umms'
-PASS='ummsreksoft'
-RESTARTTIME=10
-MAILRECIEVER='username@mail.ru'
