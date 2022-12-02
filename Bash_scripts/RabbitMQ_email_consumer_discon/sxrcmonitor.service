@@ -1,0 +1,11 @@
+[Unit]
+Description=SX-registration-collector monitoring service
+
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/queue.sh
+
+
+[Install]
+WantedBy=multi-user.target
