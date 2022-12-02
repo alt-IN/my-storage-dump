@@ -1,0 +1,6 @@
+URL='rabbitmq.sever.com:15672'
+VHOST='app-supp'
+USER='user'
+PASS='userpass'
+RESTARTTIME=100
+MAILRECIEVER='username@email.com'
