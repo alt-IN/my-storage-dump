@@ -11,7 +11,7 @@
 
 
 int main(int argc, char ** argv) {
-  //YOUR CODE GOES HERE
+
   if (argc < 2 || argc > 3) {
     fprintf(stderr, "Incorrect usage: input filename [+optional: number of trials\n");
     return EXIT_FAILURE;

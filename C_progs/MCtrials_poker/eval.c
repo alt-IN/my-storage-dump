@@ -299,11 +299,6 @@ int compare_hands(deck_t * hand1, deck_t * hand2) {
 
 
 
-//You will write this function in Course 4.
-//For now, we leave a prototype (and provide our
-//implementation in eval-c4.o) so that the
-//other functions we have provided can make
-//use of get_match_counts.
 unsigned * get_match_counts(deck_t * hand) {
   unsigned int * mcAr = malloc((hand->n_cards)*sizeof(*mcAr));
   for(size_t i = 0; i< hand->n_cards; i++) {
@@ -323,15 +318,7 @@ unsigned * get_match_counts(deck_t * hand) {
 
   
 
-// We provide the below functions.  You do NOT need to modify them
-// In fact, you should not modify them!
 
-
-//This function copies a straight starting at index "ind" from deck "from".
-//This copies "count" cards (typically 5).
-//into the card array "to"
-//if "fs" is NUM_SUITS, then suits are ignored.
-//if "fs" is any other value, a straight flush (of that suit) is copied.
 void copy_straight(card_t ** to, deck_t *from, size_t ind, suit_t fs, size_t count) {
   assert(fs == NUM_SUITS || from->cards[ind]->suit == fs);
   unsigned nextv = from->cards[ind]->value;
@@ -352,11 +339,7 @@ void copy_straight(card_t ** to, deck_t *from, size_t ind, suit_t fs, size_t cou
 }
 
 
-//This looks for a straight (or straight flush if "fs" is not NUM_SUITS)
-// in "hand".  It calls the student's is_straight_at for each possible
-// index to do the work of detecting the straight.
-// If one is found, copy_straight is used to copy the cards into
-// "ans".
+
 int find_straight(deck_t * hand, suit_t fs, hand_eval_t * ans) {
   if (hand->n_cards < 5){
     return 0;
@@ -386,9 +369,7 @@ int find_straight(deck_t * hand, suit_t fs, hand_eval_t * ans) {
 }
 
 
-//This function puts all the hand evaluation logic together.
-//This function is longer than we generally like to make functions,
-//and is thus not so great for readability :(
+
 hand_eval_t evaluate_hand(deck_t * hand) {
   suit_t fs = flush_suit(hand);
   hand_eval_t ans;
