@@ -5,6 +5,13 @@ import os
 #import re
 import datetime
 from PIL import ImageTk, Image
+from tkinter import messagebox, filedialog
+
+def fill_label():
+    temp = filedialog.askdirectory()
+    pathEntry.delete(0, tk.END)
+    pathEntry.insert(0, temp)
+
 
 
 def get_files() -> dict:
@@ -18,8 +25,7 @@ def get_files() -> dict:
         if not os.path.exists(temp):
             erLabel['text'] = "Incorrect path!"
             return None
-        path = temp
-        
+        path = temp     
     fileList = [f for f in os.listdir(path) if os.path.isfile(os.path.join(path, f)) and f != os.path.basename(__file__)]
     fileDict = {}
     for f in fileList: 
@@ -33,17 +39,19 @@ def get_files() -> dict:
 
 def proceed_func() -> None:
     files = get_files()
-    for k in files:
-        create_dir(k)
-        move_files(k, files[k])
-
+    if files:
+        for k in files:
+            create_dir(k)
+            move_files(k, files[k])
+        messagebox.showinfo('Success', 'Files successfully sorted')
 
 def create_dir(dateVal) -> None:
     global path
-    try:
-        os.mkdir(os.path.join(path, dateVal))
-    except:
-        print(f"Cannot create directory:{os.path.join(path, dateVal)}")
+    if not os.path.isdir(os.path.join(path, dateVal)):
+        try:
+            os.mkdir(os.path.join(path, dateVal))
+        except:
+            print(f"Cannot create directory:{os.path.join(path, dateVal)}")
 
 
 
@@ -61,7 +69,7 @@ if __name__ == '__main__':
 
     path = None
     rootWindow = tk.Tk()
-    icon = ImageTk.PhotoImage(Image.open("fdi.jpg"))
+    icon = ImageTk.PhotoImage(Image.open(os.path.join(os.path.dirname(__file__),"images", "fdi.jpg")))
     rootWindow.title("File Sorter")
     rootWindow.geometry("500x250")
     rootWindow.resizable(0, 0)
@@ -70,7 +78,7 @@ if __name__ == '__main__':
     lFrame = tk.Frame(rootWindow, width=100)
     cFrame = tk.Frame(rootWindow)
     lFrame.pack(side=tk.LEFT, fill=tk.Y)
-    img = ImageTk.PhotoImage(Image.open("sort_cur.jpg").resize((100, 250)))
+    img = ImageTk.PhotoImage(Image.open(os.path.join(os.path.dirname(__file__),"images","sort_cur.jpg")).resize((100, 250)))
     imgLabel = tk.Label(lFrame, image=img)
     imgLabel.pack(fill=tk.BOTH, expand=1)
 
@@ -80,7 +88,7 @@ if __name__ == '__main__':
     cFrame.pack(side=tk.LEFT, fill=tk.BOTH, expand=1)
     pathLabel.pack(anchor='n', pady=5)
     pathEntry.pack(anchor='n', fill=tk.X, padx=10)
-    selBut = tk.Button(cFrame, text='ChooseDir', width=20, bd=3)
+    selBut = tk.Button(cFrame, text='ChooseDir', width=20, bd=3, command = fill_label)
     selBut.pack(pady=5)
 
     erLabel = tk.Label(cFrame, fg='#FF0000')
@@ -88,7 +96,7 @@ if __name__ == '__main__':
     goBut = tk.Button(cFrame, text='Run', width=20, command=proceed_func, bd=3)
     goBut.pack(side=tk.LEFT, anchor='s', padx=10,  pady=10)
 
-    imgCl= ImageTk.PhotoImage(Image.open("close.png").resize((30, 30)))
+    imgCl= ImageTk.PhotoImage(Image.open(os.path.join(os.path.dirname(__file__), "images","close.png")).resize((30, 30)))
     closeBut = tk.Button(cFrame, image=imgCl, borderwidth=0, relief='raised',  justify=tk.CENTER, height=30, width=30,  command = rootWindow.destroy)
     closeBut.pack(anchor='s', side = tk.RIGHT, padx=10, pady=10)
     rootWindow.mainloop()
